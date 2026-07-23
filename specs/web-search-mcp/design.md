@@ -1,6 +1,6 @@
 # Design: Web Search MCP
 
-Status: Draft
+Status: Approved
 
 ## Design goals
 
