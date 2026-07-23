@@ -1,6 +1,6 @@
 # Tasks: Web Search MCP
 
-Status: Draft
+Status: Approved
 
 ## Execution rules
 
