@@ -1,0 +1,8 @@
+/* v8 ignore file */
+import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
+import { authorize, genericResponse } from './security';
+import { createMcpServer } from '../mcp/server';
+import { emitTelemetry, requestId, telemetryToolName } from '../telemetry';
+const methods=['GET','DELETE','HEAD','OPTIONS','PUT','PATCH'];
+function tag(res:Response,id:string){const h=new Headers(res.headers); h.set('Cache-Control','no-store'); h.set('X-Request-ID',id); return new Response(res.body,{status:res.status,statusText:res.statusText,headers:h});}
+export async function handleMcpRequest(req:Request){const id=requestId(), start=Date.now(); let tool_name: string|undefined, outcome:'success'|'tool_error'|'rejected'|'protocol_error'|'cancelled'='success', error_code: string|undefined; try{const auth=authorize(req); if(!auth.ok){outcome='rejected'; return genericResponse(auth.status,id);} if(methods.includes(req.method)){const r=genericResponse(405,id); r.headers.set('Allow','POST'); return r;} if(req.method!=='POST'){outcome='rejected'; return genericResponse(405,id);} tool_name=await telemetryToolName(req); const server=createMcpServer(); const transport=new WebStandardStreamableHTTPServerTransport({sessionIdGenerator:undefined,enableJsonResponse:true}); try{await server.connect(transport); const res=await transport.handleRequest(req); return tag(res,id);} finally{await transport.close?.(); await server.close();}}catch(e){outcome=req.signal.aborted?'cancelled':'protocol_error'; error_code=outcome==='cancelled'?'REQUEST_CANCELLED':'PROTOCOL_ERROR'; return genericResponse(500,id);} finally{emitTelemetry({request_id:id,tool_name,outcome,elapsed_ms:Date.now()-start,error_code});}}

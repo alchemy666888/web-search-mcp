@@ -1,0 +1,6 @@
+import { providerResponseSchema, normalizedSearchSchema } from './schemas';
+import { SearchToolError } from './errors';
+import type { NormalizedSearch } from './types';
+export const BODY_CAP=1024*1024;
+export function deterministicJson(v:unknown){return JSON.stringify(v)}
+export async function normalizeProviderResponse(response:Response, fallbackQuery:string):Promise<NormalizedSearch>{const text=await response.text(); if(text.length>BODY_CAP) throw new SearchToolError('UPSTREAM_INVALID_RESPONSE'); let raw:unknown; try{raw=JSON.parse(text)}catch{throw new SearchToolError('UPSTREAM_INVALID_RESPONSE')} const parsed=providerResponseSchema.safeParse(raw); if(!parsed.success) throw new SearchToolError('UPSTREAM_INVALID_RESPONSE'); const out={query:parsed.data.query??fallbackQuery,total_results:parsed.data.total_results,page:parsed.data.page,results:parsed.data.results.map(r=>{const o:{position:number;site_name?:string;title:string;snippet:string;url:string;date?:string;publisher?:string}={position:r.position,title:r.title,snippet:r.snippet,url:r.url}; if(r.site_name!==undefined)o.site_name=r.site_name; if(r.date!==undefined)o.date=r.date; if(r.publisher!==undefined)o.publisher=r.publisher; return o;})}; const ok=normalizedSearchSchema.safeParse(out); if(!ok.success) throw new SearchToolError('UPSTREAM_INVALID_RESPONSE'); return ok.data}

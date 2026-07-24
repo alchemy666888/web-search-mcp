@@ -20,7 +20,7 @@ Revised: 2026-07-24 — TASK-001 now contains the complete exact runtime and dev
 
 ### TASK-001 — Bootstrap the pinned project and quality toolchain
 
-Status: Pending
+Status: Completed
 
 Requirements: REQ-NF-001, REQ-NF-008
 
@@ -92,11 +92,11 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Completed bootstrap with exact pinned package.json, pnpm-lock.yaml, strict TypeScript, ESLint, Vitest coverage config, and .npmrc. Verified Node v24.15.0, pnpm 10.28.1, configured public registry resolution, frozen install, typecheck, and no lockfile mutation.
 
 ### TASK-002 — Implement search contracts, normalization, and stable errors
 
-Status: Pending
+Status: Completed
 
 Requirements: REQ-F-004, REQ-F-005, REQ-F-008, REQ-F-010, REQ-F-011, REQ-NF-008
 
@@ -138,11 +138,11 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Implemented strict search schemas, stable sanitized errors, provider body cap, normalization, and deterministic JSON. Verified with pnpm test --coverage and pnpm typecheck.
 
 ### TASK-003 — Implement runtime configuration and HTTP security primitives
 
-Status: Pending
+Status: Completed
 
 Requirements: REQ-F-002, REQ-F-012, REQ-F-015, REQ-NF-003, REQ-NF-004
 
@@ -181,11 +181,11 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Implemented lazy configuration and HTTP security primitives including Origin policy, bearer parsing, SHA-256 timing-safe comparison, no-store generic responses, and tests. Verified with pnpm test --coverage and pnpm typecheck.
 
 ### TASK-004 — Implement the bounded TinyFish search client
 
-Status: Pending
+Status: Completed
 
 Requirements: REQ-F-006, REQ-F-007, REQ-F-012, REQ-F-013, REQ-F-014, REQ-F-015, REQ-NF-005, REQ-NF-007
 
@@ -225,11 +225,11 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Implemented TinyFish URL serialization, fixed domain types, X-API-Key-only provider auth, no-store fetch, 10-second shared deadline, one eligible 250 ms retry, non-retry 4xx mapping, Retry-After parsing, cancellation handling, and tests. Verified with pnpm test --coverage and pnpm typecheck.
 
 ### TASK-005 — Register the two MCP tools and result contract
 
-Status: Pending
+Status: Completed
 
 Requirements: REQ-F-003, REQ-F-006, REQ-F-007, REQ-F-008, REQ-F-009, REQ-F-010, REQ-F-011, REQ-F-015, REQ-F-017, REQ-NF-002, REQ-NF-007, REQ-NF-008
 
@@ -271,11 +271,11 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Registered exactly web_search and news_search on a request-local McpServer, returned equivalent structured/text success and error results, and preserved safe configuration failure behavior. Verified with pnpm test --coverage and pnpm typecheck.
 
 ### TASK-006 — Integrate telemetry and the stateless Next.js MCP route
 
-Status: Pending
+Status: Completed
 
 Requirements: REQ-F-001, REQ-F-002, REQ-F-012, REQ-F-016, REQ-F-017, REQ-NF-001, REQ-NF-002, REQ-NF-003, REQ-NF-004, REQ-NF-007
 
@@ -318,11 +318,11 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Integrated stateless /mcp route, WebStandardStreamableHTTPServerTransport with stateless JSON options, pre-body security checks, no-store/request ID headers, cleanup finally blocks, and one allowlisted telemetry event per request. Verified with pnpm test --coverage, pnpm typecheck, and pnpm build.
 
 ### TASK-007 — Complete contract, concurrency, capacity, and release verification
 
-Status: Pending
+Status: Completed
 
 Requirements: REQ-F-001, REQ-F-002, REQ-F-003, REQ-F-004, REQ-F-005, REQ-F-006, REQ-F-007, REQ-F-008, REQ-F-009, REQ-F-010, REQ-F-011, REQ-F-012, REQ-F-013, REQ-F-014, REQ-F-015, REQ-F-016, REQ-F-017, REQ-NF-002, REQ-NF-003, REQ-NF-004, REQ-NF-005, REQ-NF-006, REQ-NF-007, REQ-NF-008
 
@@ -367,11 +367,11 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Added mocked contract, security, TinyFish, telemetry, route, smoke, coverage, frozen-install, lint, typecheck, test coverage, and build verification. Coverage: statements 97.36%, branches 95.45%, functions 100%, lines 100%. Frozen install left pnpm-lock.yaml unchanged.
 
 ### TASK-008 — Document operation and add the opt-in deployment smoke test
 
-Status: Pending
+Status: Completed
 
 Requirements: REQ-F-002, REQ-F-003, REQ-F-012, REQ-F-015, REQ-F-017, REQ-NF-001, REQ-NF-002, REQ-NF-003, REQ-NF-004
 
@@ -415,11 +415,11 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Added README, .env.example, .gitignore, and opt-in redacted smoke script with help/dry-run unit coverage. Verified node scripts/smoke.mjs --help, pnpm test --coverage, lint, typecheck, and build.
 
 ### TASK-009 — Deploy and verify the Vercel Preview
 
-Status: Pending
+Status: Blocked
 
 Requirements: REQ-NF-001, REQ-NF-002, REQ-NF-003, REQ-NF-004, REQ-NF-005, REQ-NF-006, REQ-NF-007
 
@@ -460,7 +460,7 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Blocked before external Preview deployment because this turn has no explicit authorization for a Vercel Preview deployment and no Vercel read-only access check was authorized/performed.
 
 ### TASK-010 — Promote the verified deployment and confirm rollback readiness
 
@@ -503,7 +503,7 @@ Completion criteria:
 
 Implementation notes:
 
-- None yet.
+- Pending; depends on TASK-009 Preview completion and separate explicit Production promotion authorization.
 
 ## Coverage matrix
 

@@ -1,0 +1,3 @@
+import { describe,it,expect,vi } from 'vitest';
+import { handleMcpRequest } from '../../src/http/handler';
+describe('route',()=>{it('rejects before body and methods',async()=>{vi.spyOn(console,'log').mockImplementation(()=>{}); process.env.MCP_AUTH_TOKEN='t'; const r=await handleMcpRequest(new Request('https://x.test/mcp',{method:'GET',headers:{authorization:'Bearer t'}})); expect(r.status).toBe(405); expect(r.headers.get('cache-control')).toBe('no-store'); delete process.env.MCP_AUTH_TOKEN; const u=await handleMcpRequest(new Request('https://x.test/mcp',{method:'POST'})); expect(u.status).toBe(503); vi.restoreAllMocks();});});
